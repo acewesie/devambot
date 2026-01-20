@@ -1,5 +1,4 @@
-{
-  "name": "devambot",
+
   "version": "1.0.0",
   "description": "DEVAMBOT - Minecraft Bot Yönetim Paneli",
   "main": "server.js",
@@ -13,7 +12,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "mineflayer": "^4.33.0"
+    "mineflayer": "4.32.0"
   },
   "engines": {
     "node": "18.x"
