@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 DEVAMBOT - Minecraft Bot Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* ==================== LOGIN PAGE ==================== */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-logo p {
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .login-form .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .login-form .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00d9ff;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: #00d9ff;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .login-form input::placeholder {
+            color: #888;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .login-error {
+            background: rgba(255, 71, 87, 0.2);
+            border: 1px solid #ff4757;
+            color: #ff4757;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        /* ==================== MAIN PANEL ==================== */
+        .panel-container {
+            display: none;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #00d9ff;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: rgba(255, 71, 87, 0.2);
+            border: 1px solid #ff4757;
+            color: #ff4757;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff4757;
+            color: #fff;
+        }
+
+        /* Bot Cards Grid */
+        .bots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bot-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d9ff;
+        }
+
+        .bot-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .bot-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00d9ff;
+        }
+
+        .bot-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bot-status.online {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+        }
+
+        .bot-status.offline {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+            border: 1px solid #ff4757;
+        }
+
+        .bot-info {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .bot-info span {
+            color: #fff;
+        }
+
+        .bot-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-item i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-item .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .stat-item.health i { color: #ff4757; }
+        .stat-item.food i { color: #ffa502; }
+        .stat-item.pos i { color: #00d9ff; }
+
+        .bot-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .bot-actions button {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-start {
+            background: linear-gradient(45deg, #00ff88, #00d9ff);
+            color: #1a1a2e;
+        }
+
+        .btn-stop {
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            color: #fff;
+        }
+
+        .btn-chat {
+            background: linear-gradient(45deg, #5f27cd, #a29bfe);
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: rgba(255, 71, 87, 0.2);
+            color: #ff4757;
+            border: 1px solid #ff4757;
+        }
+
+        .bot-actions button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Add Bot Section */
+        .add-bot-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px dashed rgba(0, 217, 255, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .add-bot-section h2 {
+            color: #00d9ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-bot-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #00d9ff;
+        }
+
+        .add-bot-btn {
+            grid-column: span 2;
+            padding: 15px;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-bot-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        /* Chat Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: #1a1a2e;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            border: 1px solid #00d9ff;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(0, 217, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .modal-header h3 {
+            color: #00d9ff;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #ff4757;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-log {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-message {
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .chat-input-area button {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            border: none;
+            border-radius: 8px;
+            color: #1a1a2e;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Auto Message Section */
+        .auto-msg-section {
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .auto-msg-section h4 {
+            color: #00d9ff;
+            margin-bottom: 10px;
+        }
+
+        .auto-msg-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .auto-msg-controls input {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .auto-msg-controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .auto-msg-controls .start {
+            background: #00ff88;
+            color: #1a1a2e;
+        }
+
+        .auto-msg-controls .stop {
+            background: #ff4757;
+            color: #fff;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #00d9ff;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .bots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .add-bot-form {
+                grid-template-columns: 1fr;
+            }
+
+            .add-bot-btn {
+                grid-column: span 1;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #00d9ff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-top: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success {
+            background: rgba(0, 255, 136, 0.9);
+            color: #1a1a2e;
+        }
+
+        .toast.error {
+            background: rgba(255, 71, 87, 0.9);
+            color: #fff;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1><i class="fas fa-robot"></i> DEVAMBOT</h1>
+                <p>Minecraft Bot Yönetim Paneli</p>
+            </div>
+            <div class="login-error" id="loginError"></div>
+            <form class="login-form" onsubmit="login(event)">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="loginUsername" placeholder="Kullanıcı Adı" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Şifre" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Giriş Yap
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN PANEL -->
+    <div class="panel-container" id="panelPage">
+        <div class="header">
+            <h1><i class="fas fa-robot"></i> DEVAMBOT Panel</h1>
+            <div class="header-right">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="currentUser">-</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Çıkış
+                </button>
+            </div>
+        </div>
+
+        <!-- Add Bot Section -->
+        <div class="add-bot-section">
+            <h2><i class="fas fa-plus-circle"></i> Yeni Bot Ekle</h2>
+            <form class="add-bot-form" onsubmit="addBot(event)">
+                <div class="form-group">
+                    <label>Bot Adı</label>
+                    <input type="text" id="newBotName" placeholder="Örn: AFK Bot 1" required>
+                </div>
+                <div class="form-group">
+                    <label>Sunucu Adresi</label>
+                    <input type="text" id="newBotHost" placeholder="Örn: play.sunucu.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Port</label>
+                    <input type="number" id="newBotPort" value="25565">
+                </div>
+                <div class="form-group">
+                    <label>Bot Kullanıcı Adı</label>
+                    <input type="text" id="newBotUsername" placeholder="Minecraft kullanıcı adı" required>
+                </div>
+                <div class="form-group">
+                    <label>Versiyon</label>
+                    <input type="text" id="newBotVersion" value="1.21.1">
+                </div>
+                <div class="form-group">
+                    <label>Şifre Komutu</label>
+                    <input type="text" id="newBotPassword" placeholder="/login şifre">
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Ek Komutlar (virgülle ayır)</label>
+                    <input type="text" id="newBotCommands" placeholder="/spawn, /warp afk">
+                </div>
+                <button type="submit" class="add-bot-btn">
+                    <i class="fas fa-plus"></i> Bot Ekle
+                </button>
+            </form>
+        </div>
+
+        <!-- Bots Grid -->
+        <div class="bots-grid" id="botsGrid">
+            <div class="empty-state">
+                <i class="fas fa-robot"></i>
+                <h3>Henüz bot eklenmemiş</h3>
+                <p>Yukarıdaki formu kullanarak ilk botunuzu ekleyin!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="modal-overlay" id="chatModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-comments"></i> <span id="chatBotName">Bot Chat</span></h3>
+                <button class="modal-close" onclick="closeChatModal()">&times;</button>
+            </div>
+            <div class="chat-log" id="modalChatLog">
+                <div class="chat-message">💬 Chat mesajları burada görünecek...</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Mesaj yazın..." onkeypress="if(event.key==='Enter')sendChat()">
+                <button onclick="sendChat()"><i class="fas fa-paper-plane"></i> Gönder</button>
+            </div>
+            <div class="auto-msg-section">
+                <h4><i class="fas fa-sync-alt"></i> Otomatik Mesaj</h4>
+                <div class="auto-msg-controls">
+                    <input type="text" id="autoMessage" placeholder="Mesaj" value="/afk">
+                    <input type="number" id="autoInterval" placeholder="Saniye" value="60" min="1" style="max-width: 80px;">
+                    <button class="start" onclick="startAutoChat()"><i class="fas fa-play"></i></button>
+                    <button class="stop" onclick="stopAutoChat()"><i class="fas fa-stop"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        let currentChatBotId = null;
+        let statusIntervals = {};
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Check auth status on load
+        async function checkAuth() {
+            try {
+                const res = await fetch('/api/auth/check');
+                const data = await res.json();
+                
+                if (data.loggedIn) {
+                    showPanel(data.username);
+                } else {
+                    showLogin();
+                }
+            } catch (err) {
+                showLogin();
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('panelPage').style.display = 'none';
+        }
+
+        function showPanel(username) {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('panelPage').style.display = 'block';
+            document.getElementById('currentUser').textContent = username;
+            loadBots();
+        }
+
+        // Login
+        async function login(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    showToast('Giriş başarılı!');
+                    showPanel(data.username);
+                } else {
+                    document.getElementById('loginError').textContent = data.mesaj;
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } catch (err) {
+                document.getElementById('loginError').textContent = 'Bağlantı hatası!';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        // Logout
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            // Clear all status intervals
+            Object.values(statusIntervals).forEach(interval => clearInterval(interval));
+            statusIntervals = {};
+            showToast('Çıkış yapıldı!');
+            showLogin();
+        }
+
+        // Load bots
+        async function loadBots() {
+            try {
+                const res = await fetch('/api/bots');
+                const data = await res.json();
+
+                const grid = document.getElementById('botsGrid');
+                
+                if (data.bots.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-robot"></i>
+                            <h3>Henüz bot eklenmemiş</h3>
+                            <p>Yukarıdaki formu kullanarak ilk botunuzu ekleyin!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = data.bots.map(bot => `
+                    <div class="bot-card" id="bot-${bot.id}">
+                        <div class="bot-card-header">
+                            <span class="bot-name"><i class="fas fa-robot"></i> ${bot.bot_name}</span>
+                            <span class="bot-status ${bot.isOnline ? 'online' : 'offline'}">
+                                ${bot.isOnline ? '● Online' : '○ Offline'}
+                            </span>
+                        </div>
+                        <div class="bot-info">
+                            <div><i class="fas fa-server"></i> Sunucu: <span>${bot.host}:${bot.port}</span></div>
+                            <div><i class="fas fa-user"></i> Kullanıcı: <span>${bot.bot_username}</span></div>
+                            <div><i class="fas fa-code-branch"></i> Versiyon: <span>${bot.version}</span></div>
+                        </div>
+                        <div class="bot-stats">
+                            <div class="stat-item health">
+                                <i class="fas fa-heart"></i>
+                                <div class="value" id="health-${bot.id}">0</div>
+                            </div>
+                            <div class="stat-item food">
+                                <i class="fas fa-drumstick-bite"></i>
+                                <div class="value" id="food-${bot.id}">0</div>
+                            </div>
+                            <div class="stat-item pos">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="value" id="pos-${bot.id}">0,0,0</div>
+                            </div>
+                        </div>
+                        <div class="bot-actions">
+                            <button class="btn-start" onclick="startBot(${bot.id})">
+                                <i class="fas fa-play"></i> Başlat
+                            </button>
+                            <button class="btn-stop" onclick="stopBot(${bot.id})">
+                                <i class="fas fa-stop"></i> Durdur
+                            </button>
+                            <button class="btn-chat" onclick="openChatModal(${bot.id}, '${bot.bot_name}')">
+                                <i class="fas fa-comments"></i> Chat
+                            </button>
+                            <button class="btn-delete" onclick="deleteBot(${bot.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Start status updates for all bots
+                data.bots.forEach(bot => {
+                    startStatusUpdates(bot.id);
+                });
+
+            } catch (err) {
+                console.error('Bot yükleme hatası:', err);
+            }
+        }
+
+        // Add bot
+        async function addBot(e) {
+            e.preventDefault();
+
+            const botData = {
+                bot_name: document.getElementById('newBotName').value,
+                host: document.getElementById('newBotHost').value,
+                port: parseInt(document.getElementById('newBotPort').value) || 25565,
+                bot_username: document.getElementById('newBotUsername').value,
+                version: document.getElementById('newBotVersion').value || '1.21.1',
+                password_cmd: document.getElementById('newBotPassword').value,
+                extra_commands: document.getElementById('newBotCommands').value
+            };
+
+            try {
+                const res = await fetch('/api/bots', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(botData)
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    showToast('Bot eklendi!');
+                    // Clear form
+                    document.getElementById('newBotName').value = '';
+                    document.getElementById('newBotHost').value = '';
+                    document.getElementById('newBotUsername').value = '';
+                    document.getElementById('newBotPassword').value = '';
+                    document.getElementById('newBotCommands').value = '';
+                    loadBots();
+                } else {
+                    showToast(data.mesaj, 'error');
+                }
+            } catch (err) {
+                showToast('Bot eklenemedi!', 'error');
+            }
+        }
+
+        // Delete bot
+        async function deleteBot(botId) {
+            if (!confirm('Bu botu silmek istediğinize emin misiniz?')) return;
+
+            try {
+                const res = await fetch(`/api/bots/${botId}`, { method: 'DELETE' });
+                const data = await res.json();
+
+                if (data.success) {
+                    showToast('Bot silindi!');
+                    if (statusIntervals[botId]) {
+                        clearInterval(statusIntervals[botId]);
+                        delete statusIntervals[botId];
+                    }
+                    loadBots();
+                } else {
+                    showToast(data.mesaj, 'error');
+                }
+            } catch (err) {
+                showToast('Bot silinemedi!', 'error');
+            }
+        }
+
+        // Start bot
+        async function startBot(botId) {
+            try {
+                const res = await fetch(`/api/bots/${botId}/start`, { method: 'POST' });
+                const data = await res.json();
+
+                if (data.success) {
+                    showToast('Bot başlatılıyor...');
+                } else {
+                    showToast(data.mesaj, 'error');
+                }
+            } catch (err) {
+                showToast('Bot başlatılamadı!', 'error');
+            }
+        }
+
+        // Stop bot
+        async function stopBot(botId) {
+            try {
+                const res = await fetch(`/api/bots/${botId}/stop`, { method: 'POST' });
+                const data = await res.json();
+
+                if (data.success) {
+                    showToast('Bot durduruldu!');
+                } else {
+                    showToast(data.mesaj, 'error');
+                }
+            } catch (err) {
+                showToast('Bot durdurulamadı!', 'error');
+            }
+        }
+
+        // Status updates
+        function startStatusUpdates(botId) {
+            if (statusIntervals[botId]) {
+                clearInterval(statusIntervals[botId]);
+            }
+
+            const updateStatus = async () => {
+                try {
+                    const res = await fetch(`/api/bots/${botId}/status`);
+                    const data = await res.json();
+
+                    if (data.success) {
+                        const status = data.status;
+                        
+                        // Update status badge
+                        const card = document.getElementById(`bot-${botId}`);
+                        if (card) {
+                            const statusBadge = card.querySelector('.bot-status');
+                            if (status.bagli) {
+                                statusBadge.className = 'bot-status online';
+                                statusBadge.textContent = '● Online';
+                            } else {
+                                statusBadge.className = 'bot-status offline';
+                                statusBadge.textContent = '○ Offline';
+                            }
+                        }
+
+                        // Update stats
+                        const healthEl = document.getElementById(`health-${botId}`);
+                        const foodEl = document.getElementById(`food-${botId}`);
+                        const posEl = document.getElementById(`pos-${botId}`);
+
+                        if (healthEl) healthEl.textContent = status.saglik;
+                        if (foodEl) foodEl.textContent = status.yemek;
+                        if (posEl) posEl.textContent = `${status.konum.x},${status.konum.y},${status.konum.z}`;
+
+                        // Update chat modal if open
+                        if (currentChatBotId === botId && status.chatLog.length > 0) {
+                            const chatLog = document.getElementById('modalChatLog');
+                            chatLog.innerHTML = status.chatLog.map(msg => 
+                                `<div class="chat-message">💬 ${msg}</div>`
+                            ).join('');
+                            chatLog.scrollTop = chatLog.scrollHeight;
+                        }
+                    }
+                } catch (err) {
+                    console.error('Status güncelleme hatası:', err);
+                }
+            };
+
+            updateStatus();
+            statusIntervals[botId] = setInterval(updateStatus, 2000);
+        }
+
+        // Chat Modal
+        function openChatModal(botId, botName) {
+            currentChatBotId = botId;
+            document.getElementById('chatBotName').textContent = botName;
+            document.getElementById('chatModal').style.display = 'flex';
+        }
+
+        function closeChatModal() {
+            document.getElementById('chatModal').style.display = 'none';
+            currentChatBotId = null;
+        }
+
+        async function sendChat() {
+            const input = document.getElementById('chatInput');
+            const mesaj = input.value.trim();
+            if (!mesaj || !currentChatBotId) return;
+
+            try {
+                const res = await fetch(`/api/bots/${currentChatBotId}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mesaj })
+                });
+
+                if (res.ok) {
+                    input.value = '';
+                } else {
+                    showToast('Mesaj gönderilemedi!', 'error');
+                }
+            } catch (err) {
+                showToast('Bağlantı hatası!', 'error');
+            }
+        }
+
+        // Auto Chat
+        async function startAutoChat() {
+            if (!currentChatBotId) return;
+
+            const metin = document.getElementById('autoMessage').value;
+            const saniye = parseInt(document.getElementById('autoInterval').value);
+
+            try {
+                const res = await fetch(`/api/bots/${currentChatBotId}/auto-chat/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ metin, saniye })
+                });
+
+                const data = await res.json();
+                showToast(data.mesaj);
+            } catch (err) {
+                showToast('Başlatılamadı!', 'error');
+            }
+        }
+
+        async function stopAutoChat() {
+            if (!currentChatBotId) return;
+
+            try {
+                const res = await fetch(`/api/bots/${currentChatBotId}/auto-chat/stop`, { method: 'POST' });
+                const data = await res.json();
+                showToast(data.mesaj);
+            } catch (err) {
+                showToast('Durdurulamadı!', 'error');
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('chatModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeChatModal();
+            }
+        });
+
+        // Init
+        checkAuth();
+    </script>
+</body>
+</html>
