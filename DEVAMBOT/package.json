@@ -1,28 +1,17 @@
-
+{
+  "name": "devambot",
   "version": "1.0.0",
-  "description": "DEVAMBOT - Minecraft Bot Yönetim Paneli",
+  "description": "Minecraft bot paneli",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "better-sqlite3": "^9.4.3",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "mineflayer": "4.32.0"
+    "start": "node server.js"
   },
   "engines": {
     "node": "18.x"
   },
-  "keywords": [
-    "minecraft",
-    "bot",
-    "panel",
-    "devambot"
-  ],
-  "author": "DEVAMBOT",
-  "license": "MIT"
+  "dependencies": {
+    "express": "^4.18.2",
+    "mineflayer": "4.32.0",
+    "better-sqlite3": "^8.4.0"
+  }
 }
